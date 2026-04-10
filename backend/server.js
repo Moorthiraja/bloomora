@@ -457,7 +457,6 @@ app.post('/api/orders/place', (req, res) => {
       text: plainText,
       html: confirmationHtml,
     }).then(() => {
-      console.log(`Order confirmation email sent to ${billing.email}`);
     }).catch((emailErr) => {
       console.error('Failed to send order confirmation email:', emailErr);
     });
@@ -665,5 +664,4 @@ app.get('/api/orders', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
 });
