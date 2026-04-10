@@ -1,0 +1,96 @@
+<app-header></app-header>
+
+<section class="wishlist-page">
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <div class="page-hero">
+    <div class="hero-bg-decor">
+      <div class="deco-ring r1"></div>
+      <div class="deco-ring r2"></div>
+      <div class="deco-ring r3"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-title-block">
+        <mat-icon class="hero-icon">favorite</mat-icon>
+        <div>
+          <h1 class="hero-title">My Wishlist</h1>
+          <p class="hero-subtitle">Your curated collection of favorites</p>
+        </div>
+      </div>
+      @if (items.length > 0) {
+        <div class="hero-actions">
+          <span class="item-count">{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }}</span>
+          <button class="btn-hero-action" (click)="moveAllToCart()">
+            <mat-icon>shopping_cart</mat-icon>
+            Add All to Cart
+          </button>
+          <button class="btn-hero-clear" (click)="clearWishlist()">
+            <mat-icon>delete_sweep</mat-icon>
+            Clear All
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="wishlist-content">
+
+    <!-- ═══ EMPTY STATE ═══ -->
+    @if (items.length === 0) {
+      <div class="empty-state">
+        <div class="empty-illustration">
+          <div class="empty-heart">
+            <mat-icon>favorite_border</mat-icon>
+          </div>
+          <div class="float-sparkle s1"></div>
+          <div class="float-sparkle s2"></div>
+          <div class="float-sparkle s3"></div>
+        </div>
+        <h2>Your Wishlist is Empty</h2>
+        <p>Browse our collection and tap the heart icon to save your favorites.</p>
+        <a routerLink="/products" class="btn-browse">
+          <mat-icon>storefront</mat-icon>
+          Explore Products
+        </a>
+      </div>
+    }
+
+    <!-- ═══ WISHLIST GRID ═══ -->
+    @else {
+      <div class="wishlist-grid">
+        @for (product of items; track product.id) {
+          <div class="wishlist-card">
+            <div class="card-image" (click)="goToProduct(product)">
+              <img [src]="product.image || 'assets/logo.png'" [alt]="product.name" />
+              <button class="remove-btn" (click)="removeItem(product.id); $event.stopPropagation()" title="Remove from wishlist">
+                <mat-icon>close</mat-icon>
+              </button>
+              <div class="image-overlay">
+                <button class="overlay-btn" (click)="goToProduct(product); $event.stopPropagation()">
+                  <mat-icon>visibility</mat-icon>
+                  View Details
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-info">
+                <h3 class="card-name" (click)="goToProduct(product)">{{ product.name }}</h3>
+                <p class="card-category">{{ product.category }} &bull; {{ product.subcategory }}</p>
+              </div>
+              <div class="card-footer">
+                <span class="card-price">Rs. {{ product.price.toFixed(0) }}</span>
+                <button class="btn-move-cart" (click)="moveToCart(product)">
+                  <mat-icon>shopping_cart</mat-icon>
+                  Move to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,881 @@
+$dark: #1a0a2e;
+$wine: #3d1c4f;
+$plum: #6b4c8a;
+$gold: #c5a04e;
+$cream: #ede0c8;
+
+.checkout-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.back-btn {
+  background: none;
+  border: 1.5px solid rgba($plum, 0.25);
+  color: $plum;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    border-color: $gold;
+    color: $gold;
+  }
+}
+
+.checkout-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  color: $dark;
+  margin: 24px 0 32px;
+
+  .title-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: $gold;
+  }
+}
+
+// ── Empty State ──
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+
+  .empty-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: rgba($plum, 0.3);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: $dark;
+    margin: 16px 0 8px;
+  }
+
+  p {
+    color: $plum;
+    margin: 0 0 24px;
+  }
+}
+
+.btn-shop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: $gold;
+  color: $dark;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background: darken($gold, 8%);
+    transform: translateY(-1px);
+  }
+}
+
+// ── Layout ──
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 32px;
+  align-items: start;
+}
+
+// ── Form Sections ──
+.form-section {
+  background: #fff;
+  border: 1.5px solid rgba($plum, 0.12);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba($dark, 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba($plum, 0.1);
+
+  mat-icon {
+    color: $gold;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    color: $dark;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  .full {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: $plum;
+  }
+
+  input,
+  textarea {
+    border: 1.5px solid rgba($plum, 0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    color: $dark;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: rgba($plum, 0.03);
+    transition: all 0.2s;
+    resize: vertical;
+
+    &::placeholder {
+      color: rgba($plum, 0.4);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $gold;
+      background: rgba($gold, 0.04);
+      box-shadow: 0 0 0 3px rgba($gold, 0.1);
+    }
+  }
+
+  textarea {
+    min-height: 70px;
+  }
+}
+
+// ── Checkbox ──
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: $dark;
+  margin-bottom: 16px;
+  user-select: none;
+}
+
+.checkbox-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba($plum, 0.3);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #fff;
+  }
+
+  &.checked {
+    background: $gold;
+    border-color: $gold;
+  }
+}
+
+// ── Payment Options ──
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1.5px solid rgba($plum, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+
+  &:hover {
+    border-color: rgba($gold, 0.4);
+    background: rgba($gold, 0.03);
+  }
+
+  &.selected {
+    border-color: $gold;
+    background: rgba($gold, 0.06);
+    box-shadow: 0 0 0 3px rgba($gold, 0.1);
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: $plum;
+  }
+
+  &.selected mat-icon {
+    color: $gold;
+  }
+
+  div {
+    flex: 1;
+
+    strong {
+      display: block;
+      font-size: 0.95rem;
+      color: $dark;
+    }
+
+    p {
+      margin: 2px 0 0;
+      font-size: 0.78rem;
+      color: $plum;
+    }
+  }
+}
+
+.radio-circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba($plum, 0.3);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s;
+
+  &.active {
+    border-color: $gold;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 10px;
+      height: 10px;
+      background: $gold;
+      border-radius: 50%;
+    }
+  }
+}
+
+// ── Order Summary (right sidebar) ──
+.checkout-summary {
+  position: sticky;
+  top: 24px;
+  background: linear-gradient(165deg, #0d0618 0%, #180036 30%, #37036f 60%, $dark 100%);
+  border-radius: 20px;
+  padding: 28px;
+  color: $cream;
+  box-shadow: 0 8px 32px rgba($dark, 0.3);
+}
+
+.summary-title {
+  margin: 0 0 20px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  color: $gold;
+}
+
+.summary-items {
+  max-height: 280px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($gold, 0.3);
+    border-radius: 2px;
+  }
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba($cream, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba($gold, 0.2);
+  }
+
+  .summary-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .item-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .item-qty {
+    font-size: 0.75rem;
+    color: rgba($cream, 0.6);
+  }
+
+  .item-total {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: $gold;
+    white-space: nowrap;
+  }
+}
+
+.summary-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba($gold, 0.3), transparent);
+  margin: 12px 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  color: rgba($cream, 0.7);
+
+  &.total {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $cream;
+    padding: 10px 0;
+  }
+}
+
+.free-tag {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.shipping-note {
+  margin: 4px 0 8px;
+  font-size: 0.78rem;
+  color: $plum;
+  font-style: italic;
+}
+
+// ── Pay Button ──
+.btn-pay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $gold 0%, #e8cc7a 50%, $gold 100%);
+  color: $dark;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-top: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba($gold, 0.4);
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba($cream, 0.15);
+    color: rgba($cream, 0.5);
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.form-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  color: rgba($cream, 0.5);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: rgba($cream, 0.4);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: rgba(76, 175, 80, 0.6);
+  }
+}
+
+// ── Responsive ──
+@media (max-width: 960px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    position: static;
+  }
+}
+
+// ══════════════════════════════════
+// PREMIUM ORDER SUCCESS SCREEN
+// ══════════════════════════════════
+.success-stage {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  background: radial-gradient(ellipse at 50% 0%, rgba($gold, 0.06) 0%, transparent 60%),
+              linear-gradient(180deg, #f8f4ff 0%, #f0eaf5 100%);
+}
+
+.success-card {
+  position: relative;
+  text-align: center;
+  max-width: 560px;
+  width: 100%;
+  padding: 56px 40px 48px;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow:
+    0 2px 4px rgba($dark, 0.04),
+    0 12px 40px rgba($dark, 0.08),
+    0 0 0 1px rgba($plum, 0.06);
+  overflow: hidden;
+  animation: cardEntrance 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $gold, #e8cc7a, $gold);
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ── Floating particles ──
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $gold;
+    opacity: 0;
+    animation: particleFade 3s ease-in-out infinite;
+
+    &:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    &:nth-child(2) { left: 85%; top: 15%; animation-delay: 0.5s; width: 4px; height: 4px; }
+    &:nth-child(3) { left: 20%; top: 70%; animation-delay: 1s; width: 5px; height: 5px; }
+    &:nth-child(4) { left: 75%; top: 65%; animation-delay: 1.5s; }
+    &:nth-child(5) { left: 50%; top: 85%; animation-delay: 2s; width: 3px; height: 3px; }
+    &:nth-child(6) { left: 40%; top: 10%; animation-delay: 2.5s; width: 4px; height: 4px; }
+  }
+}
+
+@keyframes particleFade {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+  50% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+}
+
+// ── Animated SVG checkmark ──
+.checkmark-ring {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 28px;
+}
+
+.checkmark-svg {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #4caf50;
+  stroke-miterlimit: 10;
+  filter: drop-shadow(0 4px 16px rgba(76, 175, 80, 0.35));
+  background: #4caf50;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke: #4caf50;
+  fill: #4caf50;
+  animation: circleStroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.2s forwards;
+}
+
+.checkmark-check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  animation: checkStroke 0.35s cubic-bezier(0.65, 0, 0.45, 1) 0.7s forwards;
+}
+
+@keyframes circleStroke {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes checkStroke {
+  to { stroke-dashoffset: 0; }
+}
+
+// ── Typography ──
+.success-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem;
+  color: $dark;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.success-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.08rem;
+  color: $plum;
+  margin: 0 0 32px;
+
+  .brand-gold {
+    color: $gold;
+    font-weight: 700;
+  }
+}
+
+// ── Order badge ──
+.order-badge {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(165deg, #0d0618 0%, #180036 30%, #37036f 60%, $dark 100%);
+  border-radius: 18px;
+  padding: 22px 48px;
+  margin-bottom: 32px;
+  box-shadow: 0 8px 32px rgba($dark, 0.25);
+
+  .badge-glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, rgba($gold, 0.4), transparent 40%, transparent 60%, rgba($gold, 0.4));
+    z-index: -1;
+  }
+
+  .badge-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: rgba($cream, 0.45);
+    font-weight: 600;
+  }
+
+  .badge-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $gold;
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px rgba($gold, 0.3);
+  }
+}
+
+// ── Detail rows ──
+.success-details {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  margin: 0 -8px 32px;
+  border-radius: 16px;
+  background: rgba($plum, 0.03);
+  border: 1px solid rgba($plum, 0.08);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: $plum;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: $gold;
+    flex-shrink: 0;
+  }
+
+  strong {
+    color: $dark;
+  }
+}
+
+// ── Actions ──
+.success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.btn-continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 36px;
+  background: linear-gradient(135deg, $gold 0%, #e8cc7a 50%, $gold 100%);
+  border: none;
+  border-radius: 999px;
+  color: $dark;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: 0 4px 18px rgba($gold, 0.25);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(#fff, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba($gold, 0.4);
+
+    &::before { left: 100%; }
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.success-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: rgba($plum, 0.45);
+  margin: 0;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    color: rgba(76, 175, 80, 0.5);
+  }
+}
+
+.btn-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: $gold;
+  color: $dark;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: darken($gold, 8%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba($gold, 0.3);
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.order-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  color: #ef5350;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .checkout-wrapper {
+    padding: 16px;
+  }
+
+  .checkout-title {
+    font-size: 1.5rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section {
+    padding: 20px 16px;
+  }
+
+  .success-card {
+    padding: 40px 24px 36px;
+  }
+
+  .success-heading {
+    font-size: 1.6rem;
+  }
+
+  .order-badge {
+    padding: 18px 32px;
+
+    .badge-value {
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<app-header></app-header>
+
+<!-- ========== HERO BANNER ========== -->
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-particles">
+    <span class="particle" *ngFor="let p of particles" [style.left]="p.left" [style.animation-delay]="p.delay" [style.animation-duration]="p.dur"></span>
+  </div>
+
+  <div class="hero-grid">
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="img-card img-card--tilt-left anim-3d" style="--delay:.15s">
+        <img src="assets/home-banner-left.png" alt="Kundan stone necklace" />
+        <div class="img-card__shine"></div>
+      </div>
+
+      <h2 class="hero-tagline anim-3d" style="--delay:.35s">
+        Expressions of<br /><span class="gold-text">Elegance.</span>
+      </h2>
+
+      <a routerLink="/products" class="btn-luxury anim-3d" style="--delay:.5s">
+        Explore Collection
+        <span class="btn-luxury__arrow">&rarr;</span>
+      </a>
+    </div>
+
+    <!-- Center -->
+    <div class="hero-center">
+      <div class="center-frame anim-3d" style="--delay:.05s">
+        <div class="center-frame__border"></div>
+        <img src="assets/home-banner-center.png" alt="Premium kundan stone pendant necklace" />
+        <div class="center-frame__glow"></div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="hero-right">
+      <h2 class="hero-headline anim-3d" style="--delay:.25s">
+        <em>Unveil the Artistry<br />in Our Stone<br />Collection</em>
+      </h2>
+
+      <div class="img-card img-card--tilt-right anim-3d" style="--delay:.45s">
+        <img src="assets/flower.png" alt="Pipe cleaner flower bouquet" />
+        <div class="img-card__shine"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MARQUEE STRIP ========== -->
+<div class="marquee-strip anim-3d" style="--delay:.6s">
+  <div class="marquee-track">
+    <span *ngFor="let item of marqueeItems">{{ item }}</span>
+    <span *ngFor="let item of marqueeItems">{{ item }}</span>
+  </div>
+</div>
+
+<!-- ========== CATEGORIES ========== -->
+<section class="categories">
+  <h2 class="section-heading anim-3d" style="--delay:.65s">
+    <span class="heading-line"></span>
+    Shop by Craft
+    <span class="heading-line"></span>
+  </h2>
+
+  <div class="cat-grid">
+    <a routerLink="/products" class="cat-card anim-3d" style="--delay:.7s">
+      <div class="cat-card__visual">
+        <img src="assets/home-bottom-img1.png" alt="Kundan Stones" />
+        <div class="cat-card__overlay">
+          <span class="cat-card__icon">◆</span>
+        </div>
+      </div>
+      <div class="cat-card__label">Kundan Stones</div>
+    </a>
+
+    <a routerLink="/products" class="cat-card anim-3d" style="--delay:.8s">
+      <div class="cat-card__visual">
+        <img src="assets/home-bottom-img2.png" alt="Kundan beads collection" />
+        <div class="cat-card__overlay">
+          <span class="cat-card__icon">●</span>
+        </div>
+      </div>
+      <div class="cat-card__label">Beads &amp; Pearls</div>
+    </a>
+
+    <a routerLink="/products" class="cat-card anim-3d" style="--delay:.9s">
+      <div class="cat-card__visual">
+        <img src="assets/home-bottom-img3.png" alt="Kundan Pendants" />
+        <div class="cat-card__overlay">
+          <span class="cat-card__icon">✦</span>
+        </div>
+      </div>
+      <div class="cat-card__label">Kundan Pendants</div>
+    </a>
+
+    <a routerLink="/products" class="cat-card anim-3d" style="--delay:1s">
+      <div class="cat-card__visual">
+        <img src="assets/home-bottom-img4.png" alt="Pipe Cleaner Crafts" />
+        <div class="cat-card__overlay">
+          <span class="cat-card__icon">✿</span>
+        </div>
+      </div>
+      <div class="cat-card__label">Pipe Cleaner Crafts</div>
+    </a>
+  </div>
+</section>
+
+<!-- ========== FLOATING SHOWCASE ========== -->
+<section class="showcase">
+  <div class="showcase-inner">
+    <div class="showcase-text anim-3d" style="--delay:1.05s">
+      <h2>Crafted for<br /><span class="gold-text">Perfection</span></h2>
+      <p>Premium kundan stones, hand-selected beads, and artisan-grade findings — everything to bring your jewelry vision to life.</p>
+      <a routerLink="/products" class="btn-luxury btn-luxury--outline">
+        View All Products <span class="btn-luxury__arrow">&rarr;</span>
+      </a>
+    </div>
+    <div class="showcase-cards">
+      <div class="float-card float-card--1 anim-3d" style="--delay:1.1s">
+        <img src="assets/home-banner-left.png" alt="Kundan stone" />
+      </div>
+      <div class="float-card float-card--2 anim-3d" style="--delay:1.2s">
+        <img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=300&q=80" alt="Kundan stone beads" />
+      </div>
+      <div class="float-card float-card--3 anim-3d" style="--delay:1.3s">
+        <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=300&q=80" alt="Colorful pipe cleaner flowers" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURES ========== -->
+<section class="features">
+  <div class="feature-card anim-3d" style="--delay:1.35s">
+    <span class="feature-card__icon">🚚</span>
+    <strong>Free Shipping</strong>
+    <span>On orders above ₹499</span>
+  </div>
+  <div class="feature-card anim-3d" style="--delay:1.4s">
+    <span class="feature-card__icon">🔒</span>
+    <strong>Secure Payment</strong>
+    <span>100% protected checkout</span>
+  </div>
+  <div class="feature-card anim-3d" style="--delay:1.45s">
+    <span class="feature-card__icon">✅</span>
+    <strong>Quality Assurance</strong>
+    <span>Every piece carefully inspected</span>
+  </div>
+  <div class="feature-card anim-3d" style="--delay:1.5s">
+    <span class="feature-card__icon">🎁</span>
+    <strong>Gift Ready</strong>
+    <span>Complimentary packaging</span>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "B001",
+    "sku": "BD-001",
+    "name": "Crystal Glass Bead Combo Pack",
+    "category": "Beads",
+    "subcategory": "Crystal Beads",
+    "price": 215.0,
+    "image": "https://via.placeholder.com/400x300?text=Crystal+Beads",
+    "description": "Assorted crystal glass beads in mixed shapes and soft pastels for jewelry making.",
+    "rating": 4.9,
+    "stock": 120
+  },
+  {
+    "id": "B002",
+    "sku": "BD-002",
+    "name": "Matte Stone Beads",
+    "category": "Beads",
+    "subcategory": "Stone Beads",
+    "price": 180.0,
+    "image": "https://via.placeholder.com/400x300?text=Matte+Stone+Beads",
+    "description": "Earthy matte stone beads ideal for bohemian bracelets and mala necklaces.",
+    "rating": 4.7,
+    "stock": 94
+  }
+]

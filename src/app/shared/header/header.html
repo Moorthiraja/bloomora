@@ -1,0 +1,169 @@
+<mat-toolbar class="header-toolbar">
+  <!-- Logo Section -->
+  <div class="logo-section">
+    <img src="/assets/logo.png" alt="Bloomora Logo" class="logo-image" routerLink="/" style="cursor:pointer" />
+  </div>
+
+  <!-- User Details Section -->
+  <div class="user-section">
+    <!-- Cart Button (only when logged in) -->
+    @if (user().isLoggedIn) {
+      <a routerLink="/wishlist" class="wishlist-header-btn" mat-icon-button aria-label="View wishlist">
+        <mat-icon>favorite</mat-icon>
+        @if (wishlistService.totalItems() > 0) {
+          <span class="wishlist-badge">{{ wishlistService.totalItems() }}</span>
+        }
+      </a>
+      <a routerLink="/cart" class="cart-btn" mat-icon-button aria-label="View cart">
+        <mat-icon>shopping_cart</mat-icon>
+        @if (cartService.totalItems() > 0) {
+          <span class="cart-badge">{{ cartService.totalItems() }}</span>
+        }
+      </a>
+    }
+
+    <!-- Mobile Menu Button -->
+    <button 
+      mat-icon-button 
+      class="mobile-menu-btn"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle mobile menu"
+    >
+      <mat-icon>{{ isMobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    @if (user().isLoggedIn) {
+      <button
+        mat-icon-button
+        class="user-menu-btn"
+        aria-label="User menu"
+      >
+        <span class="user-name">{{ user().name }}</span>
+      </button>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="userMenu"
+        class="expand-btn"
+        [attr.aria-expanded]="isExpanded()"
+        aria-label="Toggle user menu"
+      >
+        <mat-icon>{{ isExpanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" (opened)="isExpanded.set(true)" (closed)="isExpanded.set(false)">
+        <button mat-menu-item disabled>
+          <mat-icon>email</mat-icon>
+          <span>{{ user().email }}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/my-profile">
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/my-orders">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>My Orders</span>
+        </button>
+        <button mat-menu-item routerLink="/wishlist">
+          <mat-icon>favorite</mat-icon>
+          <span>Wishlist</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    } @else {
+      <button mat-raised-button color="primary" (click)="login()">
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
+    }
+  </div>
+</mat-toolbar>
+
+<!-- Mobile Menu Overlay -->
+<div 
+  class="mobile-menu-overlay" 
+  [class.open]="isMobileMenuOpen()"
+  (click)="closeMobileMenu()"
+></div>
+
+<!-- Mobile Menu Sidebar -->
+<aside class="mobile-menu" [class.open]="isMobileMenuOpen()">
+  <div class="mobile-menu-header">
+    <h3>Menu</h3>
+    <button mat-icon-button (click)="closeMobileMenu()" aria-label="Close menu">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Mobile Navigation Links -->
+  <nav class="mobile-nav">
+    <a routerLink="/" class="mobile-nav-link" (click)="closeMobileMenu()">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a routerLink="/products" class="mobile-nav-link" (click)="closeMobileMenu()">
+      <mat-icon>shopping_bag</mat-icon>
+      <span>Products</span>
+    </a>
+    <a routerLink="/about-us" class="mobile-nav-link" (click)="closeMobileMenu()">
+      <mat-icon>info</mat-icon>
+      <span>About Us</span>
+    </a>
+    <a routerLink="/contact-us" class="mobile-nav-link" (click)="closeMobileMenu()">
+      <mat-icon>mail</mat-icon>
+      <span>Contact Us</span>
+    </a>
+  </nav>
+
+  <!-- Mobile Menu Footer (User Section) -->
+  <div class="mobile-menu-footer">
+    @if (user().isLoggedIn) {
+      <button mat-stroked-button class="mobile-menu-item" (click)="closeMobileMenu()">
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </button>
+      <button mat-stroked-button class="mobile-menu-item" (click)="closeMobileMenu()">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>My Orders</span>
+      </button>
+      <button mat-stroked-button class="mobile-menu-item" (click)="closeMobileMenu()">
+        <mat-icon>favorite</mat-icon>
+        <span>Wishlist</span>
+      </button>
+      <button mat-stroked-button class="mobile-menu-item" (click)="logout(); closeMobileMenu();">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    } @else {
+      <button mat-raised-button color="primary" class="mobile-menu-item" (click)="login(); closeMobileMenu();">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+    }
+  </div>
+</aside>
+
+<!-- Navigation Menu -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <a routerLink="/" class="nav-link">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a routerLink="/products" class="nav-link">
+      <mat-icon>shopping_bag</mat-icon>
+      <span>Products</span>
+    </a>
+    <a routerLink="/about-us" class="nav-link">
+      <mat-icon>info</mat-icon>
+      <span>About Us</span>
+    </a>
+    <a routerLink="/contact-us" class="nav-link">
+      <mat-icon>mail</mat-icon>
+      <span>Contact Us</span>
+    </a>
+  </div>
+</nav>

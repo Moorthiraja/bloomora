@@ -1,0 +1,213 @@
+<app-header></app-header>
+
+<section class="profile-wrapper">
+
+  <!-- ═══ PROFILE HERO ═══ -->
+  <div class="profile-hero">
+    <div class="hero-bg-rings">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="avatar-ring">
+        <span class="avatar-initials">{{ getInitials() }}</span>
+      </div>
+      <div class="hero-info">
+        <h1 class="hero-name">{{ user().name }}</h1>
+        <p class="hero-email">
+          <mat-icon>email</mat-icon>
+          {{ user().email }}
+        </p>
+        <div class="hero-meta">
+          <span class="meta-tag">
+            <mat-icon>verified</mat-icon>
+            Verified Member
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB NAVIGATION ═══ -->
+  <div class="tab-nav">
+    <button class="tab-btn" [class.active]="activeTab() === 'overview'" (click)="setTab('overview')">
+      <mat-icon>dashboard</mat-icon>
+      Overview
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="setTab('orders')">
+      <mat-icon>receipt_long</mat-icon>
+      My Orders
+      @if (orders().length > 0) {
+        <span class="tab-count">{{ orders().length }}</span>
+      }
+    </button>
+  </div>
+
+  <!-- ═══ OVERVIEW TAB ═══ -->
+  @if (activeTab() === 'overview') {
+    <div class="overview-grid">
+
+      <!-- Stats Cards -->
+      <div class="stat-card">
+        <div class="stat-icon-ring">
+          <mat-icon>shopping_bag</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ orders().length }}</span>
+          <span class="stat-label">Total Orders</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-ring">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ getTotalItemsPurchased() }}</span>
+          <span class="stat-label">Items Purchased</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-ring">
+          <mat-icon>account_balance_wallet</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">Rs. {{ getTotalSpent() }}</span>
+          <span class="stat-label">Total Spent</span>
+        </div>
+      </div>
+
+      <!-- Account Info Card -->
+      <div class="info-card full-span">
+        <div class="info-header">
+          <mat-icon>person</mat-icon>
+          <h3>Account Information</h3>
+        </div>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Full Name</span>
+            <span class="info-value">{{ user().name }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Email Address</span>
+            <span class="info-value">{{ user().email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Account Status</span>
+            <span class="info-value status-active">
+              <mat-icon>check_circle</mat-icon>
+              Active
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Authentication</span>
+            <span class="info-value">Email OTP Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders Preview -->
+      @if (orders().length > 0) {
+        <div class="info-card full-span">
+          <div class="info-header">
+            <mat-icon>receipt_long</mat-icon>
+            <h3>Recent Orders</h3>
+            <button class="link-btn" routerLink="/my-orders">View All →</button>
+          </div>
+          <div class="recent-orders">
+            @for (order of orders().slice(0, 3); track order.orderId) {
+              <div class="recent-order-row">
+                <div class="order-id-badge">#{{ order.orderId }}</div>
+                <span class="order-date">{{ order.orderDate }}</span>
+                <span class="order-items-count">{{ order.totalItems }} items</span>
+                <span class="order-amount">Rs. {{ order.totalAmount.toFixed(0) }}</span>
+                <span class="order-status" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ═══ ORDERS TAB ═══ -->
+  @if (activeTab() === 'orders') {
+    <div class="orders-section">
+      @if (loadingOrders()) {
+        <div class="loading-state">
+          <mat-icon class="spin">sync</mat-icon>
+          <p>Loading your orders...</p>
+        </div>
+      } @else if (orders().length === 0) {
+        <div class="empty-orders">
+          <div class="empty-icon-ring">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <h3>No Orders Yet</h3>
+          <p>Start shopping to see your order history here.</p>
+          <a routerLink="/products" class="btn-shop">
+            <mat-icon>storefront</mat-icon>
+            Browse Products
+          </a>
+        </div>
+      } @else {
+        <div class="orders-list">
+          @for (order of orders(); track order.orderId) {
+            <div class="order-card" [class.expanded]="expandedOrder() === order.orderId">
+              <div class="order-header" (click)="toggleOrder(order.orderId)">
+                <div class="order-main">
+                  <span class="order-id-pill">#{{ order.orderId }}</span>
+                  <div class="order-summary-info">
+                    <span class="order-date-text">{{ order.orderDate }}</span>
+                    <span class="order-items-text">{{ order.totalItems }} items</span>
+                  </div>
+                </div>
+                <div class="order-right">
+                  <div class="order-amount-block">
+                    <span class="amount-label">Total</span>
+                    <span class="amount-value">Rs. {{ order.totalAmount.toFixed(0) }}</span>
+                  </div>
+                  <span class="order-status-pill" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
+                  <div class="payment-chip">
+                    <mat-icon>{{ getPaymentIcon(order.paymentMethod) }}</mat-icon>
+                    <span>{{ getPaymentLabel(order.paymentMethod) }}</span>
+                  </div>
+                  <mat-icon class="expand-icon">{{ expandedOrder() === order.orderId ? 'expand_less' : 'expand_more' }}</mat-icon>
+                </div>
+              </div>
+
+              @if (expandedOrder() === order.orderId) {
+                <div class="order-details">
+                  <div class="details-table">
+                    <div class="table-head">
+                      <span>#</span>
+                      <span>Product</span>
+                      <span>Category</span>
+                      <span class="center">Qty</span>
+                      <span class="right">Price</span>
+                      <span class="right">Total</span>
+                    </div>
+                    @for (item of order.items; track item.productId; let i = $index) {
+                      <div class="table-row">
+                        <span>{{ i + 1 }}</span>
+                        <span class="product-name">{{ item.name }}</span>
+                        <span class="category-text">{{ item.category }}</span>
+                        <span class="center">{{ item.quantity }}</span>
+                        <span class="right">Rs. {{ item.unitPrice.toFixed(0) }}</span>
+                        <span class="right gold">Rs. {{ item.lineTotal.toFixed(0) }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+</section>
+
+<app-footer></app-footer>

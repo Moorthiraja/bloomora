@@ -1,0 +1,135 @@
+<app-header></app-header>
+
+<section class="contact-wrapper">
+
+  @if (submitted()) {
+    <!-- ═══ SUCCESS STATE ═══ -->
+    <div class="success-stage">
+      <div class="success-card">
+        <div class="particles">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="success-checkmark">
+          <svg viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="25" fill="#4caf50" stroke="#4caf50" stroke-width="2" />
+            <path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" d="M14.1 27.2l7.1 7.2 16.7-16.8" class="check-path" />
+          </svg>
+        </div>
+
+        <h2 class="success-title">Message Sent!</h2>
+        <p class="success-sub">Thank you for reaching out. We'll get back to you within <strong>24 hours</strong>.</p>
+
+        <button class="btn-another" (click)="resetForm()">
+          <mat-icon>mail_outline</mat-icon>
+          Send Another Message
+        </button>
+      </div>
+    </div>
+  } @else {
+
+  <!-- ═══ HERO SECTION ═══ -->
+  <div class="contact-hero">
+    <div class="hero-content">
+      <span class="hero-tag">Get in Touch</span>
+      <h1 class="hero-title">We'd Love to<br />Hear From You</h1>
+      <p class="hero-sub">Have a question about our jewelry supplies or need help with your order? Our team is here to assist you.</p>
+    </div>
+    <div class="hero-decoration">
+      <div class="deco-ring ring-1"></div>
+      <div class="deco-ring ring-2"></div>
+      <div class="deco-ring ring-3"></div>
+      <img class="deco-logo" src="/assets/logo.png" alt="Pearl n Craft" />
+    </div>
+  </div>
+
+  <!-- ═══ CONTENT AREA ═══ -->
+  <div class="contact-layout">
+
+    <!-- Left: Info Cards -->
+    <div class="contact-info">
+      <div class="info-card">
+        <div class="info-icon-ring">
+          <mat-icon>email</mat-icon>
+        </div>
+        <h3>Email Us</h3>
+        <p>thebloomorahouse.co&#64;gmail.com</p>
+        <span class="info-note">We reply within 24 hours</span>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon-ring">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <h3>Business Hours</h3>
+        <p>Mon – Sat: 10:00 AM – 7:00 PM</p>
+        <span class="info-note">Sunday closed</span>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon-ring">
+          <mat-icon>location_on</mat-icon>
+        </div>
+        <h3>Location</h3>
+        <p>Bangalore, India</p>
+        <span class="info-note">Online store — shipping across India</span>
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="contact-form-card">
+      <div class="form-header">
+        <mat-icon>edit_note</mat-icon>
+        <h2>Send us a Message</h2>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="contact-name">Full Name *</label>
+          <input id="contact-name" type="text" [(ngModel)]="name" name="name" placeholder="Your full name" (input)="checkFormValidity()" />
+        </div>
+
+        <div class="form-group">
+          <label for="contact-email">Email Address *</label>
+          <input id="contact-email" type="email" [(ngModel)]="email" name="email" placeholder="you@example.com" (input)="checkFormValidity()" />
+        </div>
+
+        <div class="form-group">
+          <label for="contact-phone">Phone Number</label>
+          <input id="contact-phone" type="tel" [(ngModel)]="phone" name="phone" placeholder="Optional" maxlength="10" (input)="checkFormValidity()" />
+        </div>
+
+        <div class="form-group">
+          <label for="contact-subject">Subject *</label>
+          <input id="contact-subject" type="text" [(ngModel)]="subject" name="subject" placeholder="How can we help?" (input)="checkFormValidity()" />
+        </div>
+
+        <div class="form-group full">
+          <label for="contact-message">Message *</label>
+          <textarea id="contact-message" [(ngModel)]="message" name="message" placeholder="Write your message here..." rows="5" (input)="checkFormValidity()"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-submit" [disabled]="!formValid() || isLoading()" (click)="submitForm()">
+        @if (isLoading()) {
+          <mat-icon class="spin">sync</mat-icon>
+          Sending...
+        } @else {
+          <mat-icon>send</mat-icon>
+          Send Message
+        }
+      </button>
+
+      @if (errorMsg()) {
+        <p class="error-msg">
+          <mat-icon>error_outline</mat-icon>
+          {{ errorMsg() }}
+        </p>
+      }
+    </div>
+  </div>
+
+  }
+</section>
+
+<app-footer></app-footer>

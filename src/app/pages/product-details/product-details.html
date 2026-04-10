@@ -1,0 +1,108 @@
+<app-header></app-header>
+
+<section class="details-wrapper" *ngIf="product() as p">
+  <button class="back-btn" (click)="goBack()">← Back to Products</button>
+
+  <nav class="breadcrumbs">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/products">Products</a>
+    <span>/</span>
+    <span class="current">{{ p.name }}</span>
+  </nav>
+
+  <div class="details-main">
+    <div class="details-image-section">
+      <div class="image-container">
+        <img [src]="p.image || 'assets/logo.png'" [alt]="p.name" />
+      </div>
+    </div>
+
+    <div class="details-info-section">
+      <span class="product-badge">{{ p.category }}</span>
+      <h1 class="product-title">{{ p.name }}</h1>
+      <p class="product-subtitle">{{ p.category }} • {{ p.subcategory }}</p>
+      <p class="product-id">Product Code: {{ p.id }}</p>
+
+      <div class="price-block">
+        <span class="price-current">Rs. {{ p.price.toFixed(0) }}</span>
+        <span class="price-tax">Inclusive of all taxes</span>
+      </div>
+
+      <div class="quantity-section">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-control">
+          <button (click)="decrementQty()">−</button>
+          <span>{{ quantity() }}</span>
+          <button (click)="incrementQty()">+</button>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-add-cart" (click)="addToCart()">Add to Cart</button>
+        <button class="btn-buy-now" (click)="buyNow()">Buy Now</button>
+        <button class="btn-wishlist" [class.active]="wishlistService.isInWishlist(p.id)" (click)="toggleWishlist()">
+          {{ wishlistService.isInWishlist(p.id) ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <div class="product-highlights">
+        <div class="highlight-item">
+          <span class="highlight-icon">🚚</span>
+          <span>Ontime Delivery</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">🔒</span>
+          <span>Secure Payment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-tabs">
+    <div class="tab-headers">
+      <button [class.active]="activeTab() === 'description'" (click)="setTab('description')">Description</button>
+      <button [class.active]="activeTab() === 'details'" (click)="setTab('details')">Details</button>
+      <button [class.active]="activeTab() === 'reviews'" (click)="setTab('reviews')">Reviews</button>
+    </div>
+    <div class="tab-content">
+      <div *ngIf="activeTab() === 'description'">
+        <p>{{ p.name }} is a premium product from the {{ p.subcategory }} collection under {{ p.category }}. Crafted with care to meet the highest standards of quality and design.</p>
+      </div>
+      <div *ngIf="activeTab() === 'details'">
+        <ul class="spec-list">
+          <li><strong>Product ID:</strong> {{ p.id }}</li>
+          <li><strong>Category:</strong> {{ p.category }}</li>
+          <li><strong>Subcategory:</strong> {{ p.subcategory }}</li>
+          <li><strong>Price:</strong> Rs. {{ p.price.toFixed(2) }}</li>
+        </ul>
+      </div>
+      <div *ngIf="activeTab() === 'reviews'">
+        <p class="no-reviews">No reviews yet. Be the first to review this product!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-section" *ngIf="relatedProducts().length > 0">
+    <div class="related-header">
+      <h2>Related Products</h2>
+      <div class="scroll-buttons">
+        <button class="scroll-btn" (click)="scrollRelated('left')">‹</button>
+        <button class="scroll-btn" (click)="scrollRelated('right')">›</button>
+      </div>
+    </div>
+    <div class="related-scroll" #relatedScroll>
+      <article class="related-card" *ngFor="let item of relatedProducts()" (click)="goToProduct(item)">
+        <div class="related-image">
+          <img [src]="item.image || 'assets/logo.png'" [alt]="item.name" />
+        </div>
+        <div class="related-info">
+          <h4>{{ item.name }}</h4>
+          <p>Rs. {{ item.price.toFixed(2) }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

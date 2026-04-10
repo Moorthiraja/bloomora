@@ -1,0 +1,92 @@
+<app-header></app-header>
+
+<section class="product-content">
+  <div class="product-topbar">
+    <div class="topbar-left">
+      <span class="topbar-label">Category:</span>
+      <select #catSel (change)="setCategory(catSel.value)">
+        <option value="">All</option>
+        <option *ngFor="let cat of categories()" [value]="cat" [selected]="cat === selectedCategory()">{{ cat }}</option>
+      </select>
+      <span class="topbar-label" *ngIf="selectedCategory()">Subcategory:</span>
+      <select #subSel *ngIf="selectedCategory()" (change)="setSubcategory(subSel.value || null)">
+        <option value="">All</option>
+        <option *ngFor="let sub of subcategories()" [value]="sub" [selected]="sub === selectedSubcategory()">{{ sub }}</option>
+      </select>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-count">{{ products().length }} products</span>
+      <div class="sort-block">
+        <span>Sort by</span>
+        <select #sortSel (change)="setSortBy(sortSel.value)">
+          <option value="">Default</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="newest">Newest Arrivals</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ng-container *ngFor="let crumb of breadcrumbItems(); let last = last">
+      <a class="breadcrumb-link" [href]="crumb.link">{{ crumb.label }}</a>
+      <span *ngIf="!last" class="breadcrumb-separator">/</span>
+    </ng-container>
+  </nav>
+
+  <div class="product-grid">
+    <article class="product-card" *ngFor="let product of pagedProducts()" (click)="goToProduct(product)" style="cursor:pointer">
+      <div class="product-image">
+        <img [src]="getDisplayImage(product)" [alt]="product.name" />
+        <button class="expand-btn" type="button" (click)="openLightbox(product); $event.stopPropagation()">⤢</button>
+        <button class="wishlist-btn" type="button" [class.active]="wishlistService.isInWishlist(product.id)" (click)="toggleWishlist(product); $event.stopPropagation()" title="Add to wishlist">
+          {{ wishlistService.isInWishlist(product.id) ? '♥' : '♡' }}
+        </button>
+      </div>
+      <div class="product-copy">
+        <div>
+          <h3>{{ product.name }}</h3>
+          <p class="product-tag">{{ product.category }} • {{ product.subcategory }}</p>
+        </div>
+        <div class="product-price">Rs. {{ product.price.toFixed(0) }}</div>
+      </div>
+      <div class="product-actions" (click)="$event.stopPropagation()">
+        <div class="quantity-control">
+          <button type="button" (click)="requireLogin() || decrement(product)">−</button>
+          <span>{{ getQuantity(product) }}</span>
+          <button type="button" (click)="requireLogin() || increment(product)">+</button>
+        </div>
+        <button class="add-cart" (click)="addToCart(product)" [disabled]="!authService.isLoggedIn() || getQuantity(product) === 0">Add to Cart</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="pagination-bar">
+    <div class="pagination-info">
+      Showing {{ paginationInfo().start }} - {{ paginationInfo().end }} of {{ paginationInfo().total }} results
+    </div>
+    <div class="pagination-controls">
+      <button type="button" class="pagination-button" (click)="prevPage()" [disabled]="currentPage() === 1">Previous</button>
+      <button
+        type="button"
+        class="pagination-button page-number"
+        *ngFor="let page of pageNumbers()"
+        [class.active]="page === currentPage()"
+        (click)="setPage(page)">
+        {{ page }}
+      </button>
+      <button type="button" class="pagination-button" (click)="nextPage()" [disabled]="currentPage() === pageCount()">Next</button>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox-overlay" *ngIf="lightboxProduct()" (click)="closeLightbox()">
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <button class="lightbox-close" type="button" (click)="closeLightbox()">✕</button>
+    <img [src]="lightboxProduct()!.image || 'assets/logo.png'" [alt]="lightboxProduct()!.name" />
+    <p class="lightbox-name">{{ lightboxProduct()!.name }}</p>
+  </div>
+</div>
+
+<app-footer></app-footer>

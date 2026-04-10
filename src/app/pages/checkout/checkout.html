@@ -1,0 +1,300 @@
+<app-header></app-header>
+
+<section class="checkout-wrapper">
+
+  @if (orderPlaced()) {
+    <!-- ═══ PREMIUM ORDER SUCCESS SCREEN ═══ -->
+    <div class="success-stage">
+      <div class="success-card">
+        <!-- Decorative floating particles -->
+        <div class="particles">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Animated checkmark -->
+        <div class="checkmark-ring">
+          <svg class="checkmark-svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+          </svg>
+        </div>
+
+        <h1 class="success-heading">Order Confirmed</h1>
+        <p class="success-sub">Thank you for shopping with <span class="brand-gold">Pearl n Craft</span></p>
+
+        <div class="order-badge">
+          <div class="badge-glow"></div>
+          <span class="badge-label">Order ID</span>
+          <span class="badge-value">#{{ orderId() }}</span>
+        </div>
+
+        <div class="success-details">
+          <div class="detail-row">
+            <mat-icon>schedule</mat-icon>
+            <span>Your order is being processed</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon>email</mat-icon>
+            <span>Confirmation sent to <strong>{{ billingEmail }}</strong></span>
+          </div>
+          <div class="detail-row">
+            <mat-icon>local_shipping</mat-icon>
+            <span>Estimated delivery in 5–7 business days</span>
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <button class="btn-continue" (click)="goHome()">
+            <mat-icon>storefront</mat-icon>
+            Continue Shopping
+          </button>
+        </div>
+
+        <p class="success-footer">
+          <mat-icon>verified_user</mat-icon>
+          Your payment is secured and protected
+        </p>
+      </div>
+    </div>
+  } @else {
+    <button class="back-btn" (click)="goToCart()">← Back to Cart</button>
+
+  <h1 class="checkout-title">
+    <mat-icon class="title-icon">receipt_long</mat-icon>
+    Checkout
+  </h1>
+
+  @if (cartService.items().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">shopping_cart</mat-icon>
+      <h2>Your cart is empty</h2>
+      <p>Add some items to your cart before checking out.</p>
+      <button class="btn-shop" routerLink="/products">
+        <mat-icon>storefront</mat-icon>
+        Browse Products
+      </button>
+    </div>
+  } @else {
+    <div class="checkout-layout">
+      <!-- Left: Forms -->
+      <div class="checkout-forms">
+
+        <!-- ═══ BILLING INFORMATION ═══ -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon>person</mat-icon>
+            <h2>Billing Information</h2>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="billing-name">Full Name *</label>
+              <input id="billing-name" type="text" [(ngModel)]="billingName" name="billingName" placeholder="Enter your full name" required (input)="checkFormValidity()" />
+            </div>
+
+            <div class="form-group">
+              <label for="billing-email">Email Address *</label>
+              <input id="billing-email" type="email" [(ngModel)]="billingEmail" name="billingEmail" placeholder="you@example.com" required (input)="checkFormValidity()" />
+            </div>
+
+            <div class="form-group">
+              <label for="billing-phone">Phone Number *</label>
+              <input id="billing-phone" type="tel" [(ngModel)]="billingPhone" name="billingPhone" placeholder="10-digit mobile number" required maxlength="10" (input)="checkFormValidity()" />
+            </div>
+
+            <div class="form-group full">
+              <label for="billing-address">Address *</label>
+              <textarea id="billing-address" [(ngModel)]="billingAddress" name="billingAddress" placeholder="Street address, apartment, floor..." required rows="3" (input)="checkFormValidity()"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="billing-city">City *</label>
+              <input id="billing-city" type="text" [(ngModel)]="billingCity" name="billingCity" placeholder="City" required (input)="checkFormValidity()" />
+            </div>
+
+            <div class="form-group">
+              <label for="billing-state">State *</label>
+              <input id="billing-state" type="text" [(ngModel)]="billingState" name="billingState" placeholder="State" required (input)="checkFormValidity()" />
+            </div>
+
+            <div class="form-group">
+              <label for="billing-pincode">Pincode *</label>
+              <input id="billing-pincode" type="text" [(ngModel)]="billingPincode" name="billingPincode" placeholder="6-digit pincode" required maxlength="6" (input)="checkFormValidity()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ SHIPPING INFORMATION ═══ -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon>local_shipping</mat-icon>
+            <h2>Shipping Information</h2>
+          </div>
+
+          <label class="checkbox-label" (click)="toggleSameAsBilling()">
+            <span class="checkbox-box" [class.checked]="sameAsBilling()">
+              @if (sameAsBilling()) {
+                <mat-icon>check</mat-icon>
+              }
+            </span>
+            Same as billing address
+          </label>
+
+          @if (!sameAsBilling()) {
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="shipping-name">Recipient Name *</label>
+                <input id="shipping-name" type="text" [(ngModel)]="shippingName" name="shippingName" placeholder="Full name of recipient" required (input)="checkFormValidity()" />
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-phone">Phone Number *</label>
+                <input id="shipping-phone" type="tel" [(ngModel)]="shippingPhone" name="shippingPhone" placeholder="10-digit mobile number" required maxlength="10" (input)="checkFormValidity()" />
+              </div>
+
+              <div class="form-group full">
+                <label for="shipping-address">Address *</label>
+                <textarea id="shipping-address" [(ngModel)]="shippingAddress" name="shippingAddress" placeholder="Street address, apartment, floor..." required rows="3" (input)="checkFormValidity()"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-city">City *</label>
+                <input id="shipping-city" type="text" [(ngModel)]="shippingCity" name="shippingCity" placeholder="City" required (input)="checkFormValidity()" />
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-state">State *</label>
+                <input id="shipping-state" type="text" [(ngModel)]="shippingState" name="shippingState" placeholder="State" required (input)="checkFormValidity()" />
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-pincode">Pincode *</label>
+                <input id="shipping-pincode" type="text" [(ngModel)]="shippingPincode" name="shippingPincode" placeholder="6-digit pincode" required maxlength="6" (input)="checkFormValidity()" />
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- ═══ PAYMENT METHOD ═══ -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon>payment</mat-icon>
+            <h2>Payment Method</h2>
+          </div>
+
+          <div class="payment-options">
+            <label class="payment-option" [class.selected]="paymentMethod() === 'cod'" (click)="setPaymentMethod('cod')">
+              <span class="radio-circle" [class.active]="paymentMethod() === 'cod'"></span>
+              <mat-icon>money</mat-icon>
+              <div>
+                <strong>Cash on Delivery</strong>
+                <p>Pay when you receive your order</p>
+              </div>
+            </label>
+
+            <label class="payment-option" [class.selected]="paymentMethod() === 'upi'" (click)="setPaymentMethod('upi')">
+              <span class="radio-circle" [class.active]="paymentMethod() === 'upi'"></span>
+              <mat-icon>qr_code_2</mat-icon>
+              <div>
+                <strong>UPI Payment</strong>
+                <p>Pay using Google Pay, PhonePe, etc.</p>
+              </div>
+            </label>
+
+            <label class="payment-option" [class.selected]="paymentMethod() === 'card'" (click)="setPaymentMethod('card')">
+              <span class="radio-circle" [class.active]="paymentMethod() === 'card'"></span>
+              <mat-icon>credit_card</mat-icon>
+              <div>
+                <strong>Credit / Debit Card</strong>
+                <p>Visa, Mastercard, RuPay</p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="checkout-summary">
+        <h2 class="summary-title">Order Summary</h2>
+
+        <div class="summary-items">
+          @for (item of cartService.items(); track item.product.id) {
+            <div class="summary-item">
+              <img [src]="item.product.image || 'assets/logo.png'" [alt]="item.product.name" />
+              <div class="summary-item-info">
+                <span class="item-name">{{ item.product.name }}</span>
+                <span class="item-qty">Qty: <span class="number-font">{{ item.quantity }}</span></span>
+              </div>
+              <span class="item-total number-font">Rs. {{ (item.product.price * item.quantity).toFixed(0) }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row">
+          <span>Subtotal (<span class="number-font">{{ cartService.totalItems() }}</span> items)</span>
+          <span class="number-font">Rs. {{ cartService.totalPrice().toFixed(0) }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          @if (shippingCost() === 0) {
+            <span class="free-tag number-font">FREE</span>
+          } @else {
+            <span class="number-font">Rs. {{ shippingCost() }}</span>
+          }
+        </div>
+        <p class="shipping-note">Free shipping on orders of Rs. 499 and above</p>
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>Included</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total">
+          <span>Total</span>
+          <span class="number-font">Rs. {{ orderTotal().toFixed(0) }}</span>
+        </div>
+
+        <button class="btn-pay" [disabled]="!formValid() || isLoading()" (click)="placeOrder()">
+          @if (isLoading()) {
+            <mat-icon class="spin">sync</mat-icon>
+            Placing Order...
+          } @else {
+            <mat-icon>lock</mat-icon>
+            @if (paymentMethod() === 'cod') {
+              Place Order (Cash on Delivery)
+            } @else if (paymentMethod() === 'upi') {
+              Pay <span class="number-font">Rs. {{ orderTotal().toFixed(0) }}</span> via UPI
+            } @else {
+              Pay <span class="number-font">Rs. {{ orderTotal().toFixed(0) }}</span> via Card
+            }
+          }
+        </button>
+
+        @if (orderError()) {
+          <p class="order-error">
+            <mat-icon>error_outline</mat-icon>
+            {{ orderError() }}
+          </p>
+        }
+
+        @if (!formValid()) {
+          <p class="form-hint">
+            <mat-icon>info_outline</mat-icon>
+            Please fill in all required billing &amp; shipping fields to proceed.
+          </p>
+        }
+
+        <div class="secure-badge">
+          <mat-icon>verified_user</mat-icon>
+          <span>Secure checkout with SSL encryption</span>
+        </div>
+      </div>
+    </div>
+  }
+  }
+</section>
+
+<app-footer></app-footer>

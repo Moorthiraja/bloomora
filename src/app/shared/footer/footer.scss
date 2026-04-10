@@ -1,0 +1,168 @@
+.app-footer {
+  background: linear-gradient(165deg, #0d0618 0%, #180036 30%, #37036f 60%, #1a0a2e 100%);
+  color: #ede0c8;
+  padding: 40px 32px 20px;
+  margin-top: 60px;
+  border-top: 2px solid #c5a04e;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-section {
+  &.about-section .about-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .footer-logo {
+      height: 55px;
+      width: 55px;
+      object-fit: contain;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: transparent;
+      mix-blend-mode: screen;
+    }
+
+    span {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #ede0c8;
+    }
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #c5a04e;
+    margin-bottom: 12px;
+    margin-top: 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .contact-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #c5a04e;
+    flex-shrink: 0;
+  }
+
+  .follow-heading {
+    margin-top: 16px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(197, 160, 78, .15);
+    color: #c5a04e;
+    transition: background .3s ease;
+
+    &:hover {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+      color: #fff;
+      animation: iconBounce .5s ease;
+    }
+  }
+
+  @keyframes iconBounce {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.25); }
+    50%  { transform: scale(.9); }
+    70%  { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 8px;
+
+      a {
+        color: #ede0c8;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #c5a04e;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(197, 160, 78, 0.3);
+  text-align: center;
+  font-size: 13px;
+  color: #c5a04e;
+}
+
+// Mobile responsive styles
+@media (max-width: 768px) {
+  .app-footer {
+    padding: 30px 16px 15px;
+    margin-top: 40px;
+  }
+
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .footer-section {
+    h4 {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 20px 12px 10px;
+    margin-top: 30px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}

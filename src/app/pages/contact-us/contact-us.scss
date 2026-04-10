@@ -1,0 +1,550 @@
+$dark: #1a0a2e;
+$wine: #3d1c4f;
+$plum: #6b4c8a;
+$gold: #c5a04e;
+$cream: #ede0c8;
+
+// ══════════════════════════════════
+// Contact Wrapper
+// ══════════════════════════════════
+.contact-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px 64px;
+}
+
+// ══════════════════════════════════
+// HERO SECTION
+// ══════════════════════════════════
+.contact-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 64px 48px;
+  margin-bottom: 48px;
+  background: linear-gradient(165deg, #0d0618 0%, #180036 30%, #37036f 60%, $dark 100%);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba($gold, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+}
+
+.hero-content {
+  max-width: 520px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: $gold;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding: 6px 16px;
+  border: 1px solid rgba($gold, 0.3);
+  border-radius: 999px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+.hero-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem;
+  color: rgba($cream, 0.6);
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ── Hero decoration ──
+.hero-decoration {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba($gold, 0.15);
+
+  &.ring-1 {
+    inset: 0;
+    animation: pulseRing 4s ease-in-out infinite;
+  }
+  &.ring-2 {
+    inset: 20px;
+    border-color: rgba($gold, 0.25);
+    animation: pulseRing 4s ease-in-out 0.5s infinite;
+  }
+  &.ring-3 {
+    inset: 40px;
+    border-color: rgba($gold, 0.4);
+    animation: pulseRing 4s ease-in-out 1s infinite;
+  }
+}
+
+.deco-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 12px rgba($gold, 0.3));
+}
+
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.6; }
+}
+
+// ══════════════════════════════════
+// CONTENT LAYOUT
+// ══════════════════════════════════
+.contact-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+// ── Info Cards ──
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card {
+  background: #fff;
+  border: 1.5px solid rgba($plum, 0.1);
+  border-radius: 18px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 12px rgba($dark, 0.04);
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: rgba($gold, 0.3);
+    box-shadow: 0 8px 28px rgba($dark, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .info-icon-ring {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba($gold, 0.12), rgba($gold, 0.04));
+    border: 1px solid rgba($gold, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      color: $gold;
+    }
+  }
+
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem;
+    color: $dark;
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 0.88rem;
+    color: $plum;
+    margin: 0 0 4px;
+    word-break: break-word;
+  }
+
+  .info-note {
+    font-size: 0.75rem;
+    color: rgba($plum, 0.5);
+  }
+}
+
+// ── Contact Form Card ──
+.contact-form-card {
+  background: #fff;
+  border: 1.5px solid rgba($plum, 0.1);
+  border-radius: 22px;
+  padding: 36px 32px;
+  box-shadow: 0 4px 20px rgba($dark, 0.06);
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba($plum, 0.1);
+
+    mat-icon {
+      font-size: 26px;
+      width: 26px;
+      height: 26px;
+      color: $gold;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      color: $dark;
+    }
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 24px;
+
+  .full {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: $plum;
+  }
+
+  input,
+  textarea {
+    border: 1.5px solid rgba($plum, 0.18);
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 0.92rem;
+    color: $dark;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: rgba($plum, 0.02);
+    transition: all 0.25s;
+    resize: vertical;
+
+    &::placeholder {
+      color: rgba($plum, 0.35);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $gold;
+      background: rgba($gold, 0.03);
+      box-shadow: 0 0 0 3px rgba($gold, 0.1);
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+}
+
+// ── Submit Button ──
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $gold 0%, #e8cc7a 50%, $gold 100%);
+  color: $dark;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(#fff, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba($gold, 0.4);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba($plum, 0.15);
+    color: rgba($plum, 0.5);
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.error-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 0;
+  font-size: 0.82rem;
+  color: #ef5350;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// ══════════════════════════════════
+// SUCCESS STATE
+// ══════════════════════════════════
+.success-stage {
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.success-card {
+  position: relative;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  padding: 52px 40px 44px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 4px rgba($dark, 0.04), 0 12px 40px rgba($dark, 0.08);
+  overflow: hidden;
+  animation: cardIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $gold, #e8cc7a, $gold);
+  }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: $gold;
+    opacity: 0;
+    animation: pFloat 3s ease-in-out infinite;
+
+    &:nth-child(1) { left: 12%; top: 18%; animation-delay: 0s; }
+    &:nth-child(2) { left: 80%; top: 12%; animation-delay: 0.6s; }
+    &:nth-child(3) { left: 25%; top: 72%; animation-delay: 1.2s; }
+    &:nth-child(4) { left: 70%; top: 68%; animation-delay: 1.8s; }
+    &:nth-child(5) { left: 48%; top: 88%; animation-delay: 2.4s; }
+  }
+}
+
+@keyframes pFloat {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+  50% { opacity: 0.5; transform: translateY(-16px) scale(1); }
+}
+
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+
+  svg {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 4px 12px rgba(76, 175, 80, 0.3));
+  }
+
+  .check-path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: drawCheck 0.4s ease 0.5s forwards;
+  }
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.8rem;
+  color: $dark;
+  margin: 0 0 8px;
+}
+
+.success-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem;
+  color: $plum;
+  margin: 0 0 28px;
+  line-height: 1.6;
+
+  strong {
+    color: $gold;
+  }
+}
+
+.btn-another {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  border: 1.5px solid rgba($plum, 0.2);
+  background: #fff;
+  color: $dark;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $gold;
+    color: $gold;
+    transform: translateY(-1px);
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// ── Responsive ──
+@media (max-width: 960px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .info-card {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 28px;
+    gap: 32px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-decoration {
+    width: 140px;
+    height: 140px;
+  }
+
+  .deco-logo {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-wrapper {
+    padding: 0 16px 40px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-card {
+    padding: 24px 18px;
+  }
+
+  .contact-info {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,198 @@
+<app-header></app-header>
+
+<section class="orders-page">
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <div class="page-hero">
+    <div class="hero-bg-decor">
+      <div class="deco-ring r1"></div>
+      <div class="deco-ring r2"></div>
+      <div class="deco-ring r3"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-title-block">
+        <mat-icon class="hero-icon">receipt_long</mat-icon>
+        <div>
+          <h1 class="hero-title">My Orders</h1>
+          <p class="hero-subtitle">Track and manage your purchase history</p>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">{{ orders().length }}</span>
+          <span class="hero-stat-label">Orders</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">{{ getTotalItems() }}</span>
+          <span class="hero-stat-label">Items</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">Rs. {{ getTotalSpent().toFixed(0) }}</span>
+          <span class="hero-stat-label">Total Spent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orders-content">
+
+    <!-- ═══ TOOLBAR: SEARCH + FILTERS ═══ -->
+    <div class="orders-toolbar">
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          placeholder="Search by order ID, date, or product name..."
+          [value]="searchQuery()"
+          (input)="onSearch($event)"
+        />
+        @if (searchQuery()) {
+          <button class="clear-btn" (click)="searchQuery.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
+      <div class="filter-chips">
+        <button class="filter-chip" [class.active]="filterStatus() === 'all'" (click)="setFilter('all')">
+          All
+          <span class="chip-count">{{ orders().length }}</span>
+        </button>
+        <button class="filter-chip" [class.active]="filterStatus() === 'paid'" (click)="setFilter('paid')">
+          <mat-icon>check_circle</mat-icon>
+          Paid
+        </button>
+        <button class="filter-chip" [class.active]="filterStatus() === 'pending'" (click)="setFilter('pending')">
+          <mat-icon>schedule</mat-icon>
+          Pending
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ LOADING STATE ═══ -->
+    @if (loadingOrders()) {
+      <div class="loading-state">
+        <div class="loader-ring"></div>
+        <p>Loading your orders...</p>
+      </div>
+    }
+
+    <!-- ═══ EMPTY STATE ═══ -->
+    @else if (filteredOrders.length === 0 && orders().length === 0) {
+      <div class="empty-state">
+        <div class="empty-illustration">
+          <div class="empty-bag">
+            <mat-icon>shopping_bag</mat-icon>
+          </div>
+          <div class="empty-sparkle s1"></div>
+          <div class="empty-sparkle s2"></div>
+          <div class="empty-sparkle s3"></div>
+        </div>
+        <h2>No Orders Yet</h2>
+        <p>Your order history is empty. Start exploring our curated collection.</p>
+        <a routerLink="/products" class="btn-browse">
+          <mat-icon>storefront</mat-icon>
+          Browse Collection
+        </a>
+      </div>
+    }
+
+    <!-- ═══ NO RESULTS (SEARCH/FILTER) ═══ -->
+    @else if (filteredOrders.length === 0) {
+      <div class="empty-state">
+        <div class="empty-illustration">
+          <div class="empty-bag">
+            <mat-icon>search_off</mat-icon>
+          </div>
+        </div>
+        <h2>No Matching Orders</h2>
+        <p>Try adjusting your search or filter criteria.</p>
+        <button class="btn-browse" (click)="searchQuery.set(''); filterStatus.set('all')">
+          <mat-icon>refresh</mat-icon>
+          Clear Filters
+        </button>
+      </div>
+    }
+
+    <!-- ═══ ORDER CARDS ═══ -->
+    @else {
+      <div class="orders-list">
+        @for (order of filteredOrders; track order.orderId) {
+          <div class="order-card" [class.expanded]="expandedOrder() === order.orderId">
+
+            <!-- Order Card Header -->
+            <div class="order-header" (click)="toggleOrder(order.orderId)">
+              <div class="order-left">
+                <div class="order-id-pill">#{{ order.orderId }}</div>
+                <div class="order-meta">
+                  <span class="order-date">
+                    <mat-icon>calendar_today</mat-icon>
+                    {{ order.orderDate }}
+                  </span>
+                  <span class="order-qty">{{ order.totalItems }} {{ order.totalItems === 1 ? 'item' : 'items' }}</span>
+                </div>
+              </div>
+              <div class="order-right">
+                <div class="order-amount-block">
+                  <span class="amount-label">Total</span>
+                  <span class="amount-value">Rs. {{ order.totalAmount.toFixed(0) }}</span>
+                </div>
+                <span class="status-badge" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
+                <div class="payment-badge">
+                  <mat-icon>{{ getPaymentIcon(order.paymentMethod) }}</mat-icon>
+                  {{ getPaymentLabel(order.paymentMethod) }}
+                </div>
+                <mat-icon class="expand-arrow" [class.rotated]="expandedOrder() === order.orderId">expand_more</mat-icon>
+              </div>
+            </div>
+
+            <!-- Order Expanded Details -->
+            @if (expandedOrder() === order.orderId) {
+              <div class="order-body">
+                <div class="order-timeline">
+                  <div class="timeline-dot active"></div>
+                  <div class="timeline-line"></div>
+                  <div class="timeline-label">Order Placed</div>
+                </div>
+
+                <div class="items-table">
+                  <div class="items-head">
+                    <span class="col-num">#</span>
+                    <span class="col-product">Product</span>
+                    <span class="col-category">Category</span>
+                    <span class="col-qty">Qty</span>
+                    <span class="col-price">Price</span>
+                    <span class="col-total">Total</span>
+                  </div>
+                  @for (item of order.items; track item.productId; let i = $index) {
+                    <div class="items-row">
+                      <span class="col-num">{{ i + 1 }}</span>
+                      <span class="col-product">
+                        <span class="product-name">{{ item.name }}</span>
+                        @if (item.subcategory) {
+                          <span class="product-sub">{{ item.subcategory }}</span>
+                        }
+                      </span>
+                      <span class="col-category">{{ item.category }}</span>
+                      <span class="col-qty">{{ item.quantity }}</span>
+                      <span class="col-price">Rs. {{ item.unitPrice.toFixed(0) }}</span>
+                      <span class="col-total">Rs. {{ item.lineTotal.toFixed(0) }}</span>
+                    </div>
+                  }
+                  <div class="items-footer">
+                    <span class="footer-label">Order Total</span>
+                    <span class="footer-value">Rs. {{ order.totalAmount.toFixed(0) }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</section>
+
+<app-footer></app-footer>
